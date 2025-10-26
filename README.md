@@ -534,7 +534,10 @@ metadata = {
 
 Проверьте terraform plan. Изменений быть не должно.
 
-### Ссылка:
+### Ссылка: https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/54377c6507a3eafceb6cd4621facf8135d83225e/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%966
+
+<img width="1920" height="1080" alt="Снимок экрана (1684)" src="https://github.com/user-attachments/assets/e88a7823-18bf-46d9-b7f6-0898c85d3b48" />
+
 
 
 
