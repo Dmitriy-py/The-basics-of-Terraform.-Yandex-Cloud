@@ -598,6 +598,7 @@ terraform console
 "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117"
 ```
 
+<img width="1920" height="1080" alt="Снимок экрана (1685)" src="https://github.com/user-attachments/assets/a1928bf7-e0ed-417b-8e15-4652901bca83" />
 
 
 
