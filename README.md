@@ -24,9 +24,6 @@
  ### ` main.tf `
 
  ```terraform
-# main.tf
-
-# --- Yandex Provider and Terraform Core Setup ---
 terraform {
   required_providers {
     yandex = {
@@ -67,7 +64,7 @@ resource "yandex_vpc_subnet" "subnet" {
   v4_cidr_blocks = ["10.0.0.0/16"]
 }
 
-# --- Группа безопасности (Firewall) ---
+# --- Группа безопасности ---
 resource "yandex_vpc_security_group" "allow_ssh" {
   name        = "allow-ssh"
   network_id  = yandex_vpc_network.network.id
@@ -101,8 +98,6 @@ resource "yandex_compute_instance" "vm" {
   
   network_interface {
     subnet_id           = yandex_vpc_subnet.subnet.id
-    
-    # Включаем публичный IP (NAT). Синтаксис nat=true сработал в v0.168.0.
     nat                 = true 
   }
 
@@ -112,7 +107,6 @@ resource "yandex_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      # Использование image_id для корректного выбора образа
       image_id = "fd86rorl7r6l2nq3ate6" 
       size     = 30
       type     = "network-hdd"
@@ -203,9 +197,6 @@ core_fraction=5: Используется для создания виртуал
 ### ` main.tf `
 
 ```terraform
-# main.tf
-
-# --- Yandex Provider and Terraform Core Setup ---
 terraform {
   required_providers {
     yandex = {
@@ -245,7 +236,7 @@ resource "yandex_vpc_subnet" "subnet" {
   v4_cidr_blocks = var.subnet_cidr_blocks
 }
 
-# --- Группа безопасности (Firewall) ---
+# --- Группа безопасности ---
 resource "yandex_vpc_security_group" "allow_ssh" {
   name        = var.sg_name
   network_id  = yandex_vpc_network.network.id
@@ -320,8 +311,6 @@ output "service_account_key" {
 ### ` variables.tf `
 
 ```terraform
-# --- Provider Credentials & General Config ---
-
 variable "service_account_key_file" {
   description = "Path to the service account key file"
   type        = string
