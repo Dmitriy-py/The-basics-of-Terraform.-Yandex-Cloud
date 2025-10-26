@@ -534,9 +534,71 @@ metadata = {
 
 Проверьте terraform plan. Изменений быть не должно.
 
+## Ответ:
+
 ### Ссылка: https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/54377c6507a3eafceb6cd4621facf8135d83225e/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%966
 
 <img width="1920" height="1080" alt="Снимок экрана (1684)" src="https://github.com/user-attachments/assets/e88a7823-18bf-46d9-b7f6-0898c85d3b48" />
+
+## Задание 7*
+
+Изучите содержимое файла console.tf. Откройте terraform console, выполните следующие задания:
+
+Напишите, какой командой можно отобразить второй элемент списка test_list.
+Найдите длину списка test_list с помощью функции length(<имя переменной>).
+Напишите, какой командой можно отобразить значение ключа admin из map test_map.
+Напишите interpolation-выражение, результатом которого будет: "John is admin for production server based on OS ubuntu-20-04 with X vcpu, Y ram and Z virtual disks", используйте данные из переменных test_list, test_map, servers и функцию length() для подстановки значений.
+Примечание: если не догадаетесь как вычленить слово "admin", погуглите: "terraform get keys of map"
+
+В качестве решения предоставьте необходимые команды и их вывод.
+
+## Ответ:
+
+```terraform
+terraform console
+> local.test_list[1]
+"staging"
+> length(local.test_list)
+3
+> local.test_map["admin"]
+"John"
+> "${local.test_map.admin} is ${keys(local.test_map)[0]} for ${local.test_list[2]} server based on OS ${local.servers.production.image} with ${local.servers.production.cpu} vcpu, ${local.servers.production.ram} ram and ${length(local.servers.production.disks)} virtual disks"
+"John is admin for production server based on OS ubuntu-20-04 with 10 vcpu, 40 ram and 4 virtual disks"
+```
+## Задание 8*
+
+Напишите и проверьте переменную test и полное описание ее type в соответствии со значением из terraform.tfvars:
+test = [
+  {
+    "dev1" = [
+      "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117",
+      "10.0.1.7",
+    ]
+  },
+  {
+    "dev2" = [
+      "ssh -o 'StrictHostKeyChecking=no' ubuntu@84.252.140.88",
+      "10.0.2.29",
+    ]
+  },
+  {
+    "prod1" = [
+      "ssh -o 'StrictHostKeyChecking=no' ubuntu@51.250.2.101",
+      "10.0.1.30",
+    ]
+  },
+]
+Напишите выражение в terraform console, которое позволит вычленить строку "ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117" из этой переменной.
+
+## Ответ:
+
+```terraform
+terraform console
+> var.test[0]["dev1"][0]
+"ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117"
+```
+
+
 
 
 
