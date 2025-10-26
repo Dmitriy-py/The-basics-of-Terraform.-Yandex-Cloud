@@ -37,7 +37,7 @@ resource "yandex_vpc_subnet" "subnet" {
   v4_cidr_blocks = var.subnet_cidr_blocks
 }
 
-# --- Группа безопасности (Firewall) ---
+# --- Группа безопасности ---
 resource "yandex_vpc_security_group" "allow_ssh" {
   name        = var.sg_name
   network_id  = yandex_vpc_network.network.id
