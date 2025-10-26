@@ -21,6 +21,158 @@
 
 ## Ответ:
 
+ ### ` main.tf `
+
+ ```terraform
+# main.tf
+
+# --- Yandex Provider and Terraform Core Setup ---
+terraform {
+  required_providers {
+    yandex = {
+      source  = "yandex-cloud/yandex"
+      # Оставляем пустым, чтобы Terraform выбрал последнюю доступную версию
+    }
+  }
+  required_version = ">= 1.13.0"
+}
+
+provider "yandex" {
+  service_account_key_file = var.service_account_key_file
+  cloud_id                 = var.cloud_id
+  folder_id                = var.folder_id
+}
+
+# --- Сервисный аккаунт и ключ ---
+resource "yandex_iam_service_account" "sa" {
+  name        = "vm-creator-sa"
+  folder_id   = var.folder_id
+  description = "Service account for creating VMs"
+}
+
+resource "yandex_iam_service_account_key" "sa_key" {
+  service_account_id = yandex_iam_service_account.sa.id
+  description        = "Key for VM creator SA"
+}
+
+# --- Сеть и подсеть ---
+resource "yandex_vpc_network" "network" {
+  name = "default-network"
+}
+
+resource "yandex_vpc_subnet" "subnet" {
+  name           = "default-subnet"
+  zone           = var.subnet_zone
+  network_id     = yandex_vpc_network.network.id
+  v4_cidr_blocks = ["10.0.0.0/16"]
+}
+
+# --- Группа безопасности (Firewall) ---
+resource "yandex_vpc_security_group" "allow_ssh" {
+  name        = "allow-ssh"
+  network_id  = yandex_vpc_network.network.id
+  description = "Allow SSH access"
+
+  ingress {
+    protocol       = "TCP"
+    description    = "Allow SSH from anywhere"
+    from_port      = 22
+    to_port        = 22
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    protocol       = "ANY"
+    description    = "Allow all egress traffic"
+    from_port      = 0
+    to_port        = 0
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# --- Виртуальная машина ---
+resource "yandex_compute_instance" "vm" {
+  name                      = "my-vm"
+  folder_id                 = var.folder_id
+  zone                      = var.subnet_zone
+  platform_id               = "standard-v2"
+  service_account_id        = yandex_iam_service_account.sa.id
+  
+  network_interface {
+    subnet_id           = yandex_vpc_subnet.subnet.id
+    
+    # Включаем публичный IP (NAT). Синтаксис nat=true сработал в v0.168.0.
+    nat                 = true 
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file(var.vms_ssh_public_key_path)}"
+  }
+
+  boot_disk {
+    initialize_params {
+      # Использование image_family для корректного выбора образа
+      image_family = "ubuntu-2004-lts" 
+      size     = 30
+      type     = "network-hdd"
+    }
+  }
+
+  resources {
+    memory = 2
+    cores  = 2
+  }
+
+  scheduling_policy {
+    preemptible = true 
+  }
+}
+
+# --- Вывод внешнего IP-адреса ---
+output "vm_external_ip" {
+  description = "External IP address of the VM"
+  value       = yandex_compute_instance.vm.network_interface[0].nat_ip_address
+}
+
+# --- Вывод сервисного аккаунта ключа ---
+output "service_account_key" {
+  description = "Service account key"
+  value       = yandex_iam_service_account_key.sa_key.id
+  sensitive   = true
+}
+```
+
+### ` variables.tf `
+```terraform
+# variables.tf
+
+variable "service_account_key_file" {
+  description = "Path to the service account key file"
+  type        = string
+}
+
+variable "cloud_id" {
+  description = "Yandex Cloud ID"
+  type        = string
+}
+
+variable "folder_id" {
+  description = "Yandex Cloud Folder ID"
+  type        = string
+}
+
+variable "subnet_zone" {
+  description = "Zone for the VM and subnet"
+  type        = string
+  default     = "ru-central1-a"
+}
+
+variable "vms_ssh_public_key_path" {
+  description = "Path to the public SSH key"
+  type        = string
+}
+```
+
 <img width="1920" height="1080" alt="Снимок экрана (1677)" src="https://github.com/user-attachments/assets/59c77bc5-989d-4b17-9e03-f3ca2b595b8e" />
 
 <img width="1920" height="1080" alt="Снимок экрана (1676)" src="https://github.com/user-attachments/assets/0f7d535a-3a87-4ade-9102-ec1627c1c05d" />
