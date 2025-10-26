@@ -111,8 +111,8 @@ resource "yandex_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      # Использование image_family для корректного выбора образа
-      image_family = "ubuntu-2004-lts" 
+      # Использование image_id для корректного выбора образа
+      image_id = "fd86rorl7r6l2nq3ate6" 
       size     = 30
       type     = "network-hdd"
     }
@@ -187,7 +187,7 @@ variable "vms_ssh_public_key_path" {
 ```terraform
 Конфликт версий провайдера (v0.168.0): Исходный код использовал современный синтаксис (например, блок nat {}, аргумент security_groups внутри network_interface), который не поддерживался выбранной Terraform версией провайдера. Это потребовало ручной адаптации синтаксиса (например, использование nat = true и исключение привязки Security Group из блока ВМ).
 Неправильные ссылки на ресурсы/атрибуты: Использование несуществующего ресурса yandex_compute_address для получения IP и некорректная ссылка на атрибут VPC default_route_table_id.
-Некорректный ID образа: Использование короткого имени (image_id = "ubuntu-2004-lts") вместо image_family в блоке boot_disk, что приводило к ошибке API.
+Некорректный ID образа: Использование короткого имени (image_id = "ubuntu-2004-lts") вместо image_id = "fd86rorl7r6l2nq3ate6" в блоке boot_disk, что приводило к ошибке API.
 ```
 
 ### 2. Как в процессе обучения могут пригодиться параметры preemptible = true и core_fraction=5 в параметрах ВМ?
