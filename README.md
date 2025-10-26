@@ -449,8 +449,33 @@ variable "allowed_cidr_blocks_ssh" {
 
 https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%963
 
+### Задание 4
 
+Объявите в файле outputs.tf один output , содержащий: instance_name, external_ip, fqdn для каждой из ВМ в удобном лично для вас формате.(без хардкода!!!)
+Примените изменения.
+В качестве решения приложите вывод значений ip-адресов команды terraform output.
 
+вывод команды ` terraform output: `
+
+```terraform
+vms_details = {
+  "vm_db" = {
+    "external_ip" = "89.169.185.190"
+    "fqdn" = "netology-develop-platform-db.ru-central1.internal"
+    "instance_name" = "netology-develop-platform-db"
+  }
+  "vm_web" = {
+    "external_ip" = "62.84.126.13"
+    "fqdn" = "my-vm.ru-central1.internal"
+    "instance_name" = "my-vm"
+  }
+}
+```
+### Задание 5
+
+В файле locals.tf опишите в одном local-блоке имя каждой ВМ, используйте интерполяцию ${..} с НЕСКОЛЬКИМИ переменными по примеру из лекции.
+Замените переменные внутри ресурса ВМ на созданные вами local-переменные.
+Примените изменения.
 
 
 
