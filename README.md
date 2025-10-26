@@ -433,15 +433,17 @@ variable "allowed_cidr_blocks_ssh" {
 Скопируйте блок ресурса и создайте с его помощью вторую ВМ в файле main.tf: "netology-develop-platform-db" , cores  = 2, memory = 2, core_fraction = 20. Объявите её переменные с префиксом vm_db_ в том же файле ('vms_platform.tf'). ВМ должна работать в зоне "ru-central1-b"
 Примените изменения.
 
-Ответ:
+## Ответ:
 
-https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%963
+### Ссылка: https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%963
 
 ### Задание 4
 
 Объявите в файле outputs.tf один output , содержащий: instance_name, external_ip, fqdn для каждой из ВМ в удобном лично для вас формате.(без хардкода!!!)
 Примените изменения.
 В качестве решения приложите вывод значений ip-адресов команды terraform output.
+
+## Ответ:
 
 вывод команды ` terraform output: `
 
@@ -465,6 +467,8 @@ vms_details = {
 Замените переменные внутри ресурса ВМ на созданные вами local-переменные.
 Примените изменения.
 
+### Ответ:
+
 вывод команды ` terraform apply: `
 
 ```terraform
@@ -486,7 +490,7 @@ vms_details = {
 }
 ```
 
-
+### Ссылка: https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/a90f1d0bb594fc7ecf18cb5a17ae645ff8e3ccb0/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%965
 
 
 
