@@ -447,9 +447,7 @@ variable "allowed_cidr_blocks_ssh" {
 
 Ответ:
 
-https://github.com/Dmitriy-py/The-basics-of-Terraform.-Yandex-Cloud/tree/main/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%E2%84%963
-
-
+Задание №3
 
 
 
