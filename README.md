@@ -465,6 +465,26 @@ vms_details = {
 Замените переменные внутри ресурса ВМ на созданные вами local-переменные.
 Примените изменения.
 
+вывод команды ` terraform apply: `
+
+```terraform
+Apply complete! Resources: 2 added, 1 changed, 2 destroyed.
+
+Outputs:
+
+vms_details = {
+  "vm_db" = {
+    "external_ip" = "89.169.181.216"
+    "fqdn" = "netology-develop-platform-db-ru-central1-b.ru-central1.internal"
+    "instance_name" = "netology-develop-platform-db-ru-central1-b"
+  }
+  "vm_web" = {
+    "external_ip" = "89.169.159.204"
+    "fqdn" = "my-vm-ru-central1-a-b1ga.ru-central1.internal"
+    "instance_name" = "my-vm-ru-central1-a-b1ga"
+  }
+}
+```
 
 
 
