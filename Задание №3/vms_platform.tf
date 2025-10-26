@@ -1,5 +1,3 @@
-# vms_platform.tf
-
 # --- VARIABLES FOR WEB VM (VM 1) ---
 
 variable "vm_web_name" {
