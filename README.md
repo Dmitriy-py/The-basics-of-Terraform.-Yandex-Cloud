@@ -1,2 +1,5 @@
-# The-basics-of-Terraform.-Yandex-Cloud
-The basics of Terraform. Yandex Cloud
+# Домашнее задание к занятию «Основы Terraform. Yandex Cloud»
+
+## ` Дмитрий Климов `
+
+
